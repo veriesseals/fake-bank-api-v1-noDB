@@ -27,8 +27,8 @@ router.get('/', (req, res)=>{
                 transactionDate: 'All Transactions',
                 description: 'All Descriptions',
                 category: 'All Category',
-                debit: 'All Developers',
-                credit: 'All Publishers',
+                debit: 'All Debits',
+                credit: 'All Credits',
                 data
             })
         })
@@ -37,7 +37,7 @@ router.get('/', (req, res)=>{
 // In the Online API there is a type category. We will add a path
 // Adding type path => localhost:3000/account/:account
 // ---------------------------------------------
-router.get('/account/:account', (req, res)=>{
+router.get('/accounts/:accounts', (req, res)=>{
     const type = req.params.type
     const url = 'https://api.sampleapis.com/fakebank/accounts'
 
@@ -45,21 +45,21 @@ router.get('/account/:account', (req, res)=>{
         .then(res=> res.json())
         .then(data => {
             // Create an Arry for the item types
-            const accountArr = []
+            const accountsArr = []
             // push type items into the empty typeArr
             data.forEach(item => {
-                if(item.account == account) {
-                    accountArr.push(item)
+                if(item.accounts== accounts) {
+                    accountsArr.push(item)
                 }
             })
 
-            return accountArr
+            return accountsArr
         })
         // Grouping all the games by type
-        .then(accountArr => {
-            res.render('pages/account', {
-                account: 'account',
-                data: accountArr
+        .then(accountsArr => {
+            res.render('pages/accounts', {
+                accounts: 'accounts',
+                data: accountsArr
             })
         })
 })
@@ -74,7 +74,7 @@ router.get('/:id', (req, res)=> {
     fetch(url)
         .then(res => res.json())
         .then(data => {
-            res.render('pages/account_single', {
+            res.render('pages/accounts_single', {
                 title: `${data.setup}`,
                 name: `${data.setup}`,
                 data,
